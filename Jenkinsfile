@@ -26,11 +26,13 @@ pipeline {
                 
                 // Ejecutamos Maven inyectando las variables de forma segura
                 sh '''
+                    export MAVEN_OPTS="-Xmx256m -XX:+UseSerialGC"
                     mvn clean verify sonar:sonar \
                       -Dsonar.projectKey=${SONAR_PROJECT_KEY} \
                       -Dsonar.organization=${SONAR_ORG} \
                       -Dsonar.host.url=${SONAR_HOST_URL} \
                       -Dsonar.token=${SONAR_TOKEN}
+                      -Dsonar.verbose=true
                 '''
             }
         }
